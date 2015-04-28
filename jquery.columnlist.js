@@ -16,9 +16,6 @@
               remainder = ($children.length % size),
               $column;
 
-            console.log(perColumn);
-            console.log(remainder);
-
             // add class to parent list that's being split
             $list.addClass(
               options[ 'class' ] + '-parent ' +   // for styling parent
@@ -35,7 +32,6 @@
                 // handle remainders better
                 perThisColumn = perColumn;
                 if (i < remainder){ perThisColumn = perThisColumn + 1; }
-                console.log("perthiscol",perThisColumn);
                 
                 // append list items to new columns
                 for ( var j = 0; j < perThisColumn; j++ ) 
