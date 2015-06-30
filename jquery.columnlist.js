@@ -4,7 +4,8 @@
 // MODIFIED by Josh Winn
 // --Better remnants/remainder handling for 3+ columns.
 // --Additional classes for styling
-;(function( $ ) {
+// --Allow remainder in center column instead of left
+(function( $ ) {
     $.fn.columnlist = function ( options ) {
         options = $.extend( {}, $.fn.columnlist.defaults, options );
         return this.each(function () {
@@ -31,7 +32,26 @@
                 
                 // handle remainders better
                 perThisColumn = perColumn;
-                if (i < remainder){ perThisColumn = perThisColumn + 1; }
+
+                if ( options['remainderPlacement'] == 'center' )
+                {
+                  if (remainder == 1 && size == 3){
+                    if (i == 1){
+                      // put single remainder in middle column
+                      perThisColumn = perThisColumn + 1; 
+                    }
+                  } 
+                  else {
+                    // default, put remainder in left to right cols
+                    if (i < remainder){ perThisColumn = perThisColumn + 1; }
+                  }  
+                } 
+                // options['remainderPlacement'] == 'left'
+                else {
+                    // default, put remainder in left to right cols
+                    if (i < remainder){ perThisColumn = perThisColumn + 1; }
+                }
+
                 
                 // append list items to new columns
                 for ( var j = 0; j < perThisColumn; j++ ) 
@@ -51,6 +71,7 @@
     };
     $.fn.columnlist.defaults = {
         'class'        : 'column-list',
-        incrementClass : 'column-list-'
+        'incrementClass' : 'column-list-',
+        'remainderPlacement' : 'left' // also accepts 'center'
     };
 })( jQuery );
